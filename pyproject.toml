@@ -1,12 +1,12 @@
 # ---- Project Info and Dependencies ----
 
 [project.urls]
-Repository = "https://github.com/jlevy/searxng-local"
+Repository = "https://github.com/jlevy/simplexng"
 # Homepage = "https://..."
 # Documentation = "https://..."
 
 [project]
-name = "searxng-local"
+name = "simplexng"
 description = "Package of SearXNG for easy local usage"
 authors = [
     { name="Joshua Levy", email="joshua@cal.berkeley.edu" },
@@ -61,11 +61,6 @@ dependencies = [
     "tomli==2.2.1 ; python_full_version < '3.11'",
     "typer-slim==0.15.4",
     "uvloop==0.21.0",
-    # XXX Needed to pull some build deps into runtime due to searxng's initialization:
-    "editables>=0.5",
-    "hatchling>=1.27.0",
-    "setuptools>=80.9.0",
-    "uv-dynamic-versioning>=0.8.2",
     # Adding waitress as the local production server:
     "waitress>=3.0.2",
     # A few CLI niceties:
@@ -74,6 +69,18 @@ dependencies = [
     "rich>=14.0.0",
 ]
 
+[project.optional-dependencies]
+# XXX Deps needed for searxng build.
+build = [   
+    "editables>=0.5",
+    "hatchling>=1.27.0",
+    "setuptools>=80.9.0",
+    "uv-dynamic-versioning>=0.8.2"
+]
+
+[tool.uv]
+# SearXNG does not work with build isolation.
+no-build-isolation-package = ["searxng"]
 
 # ---- Dev dependencies ----
 
@@ -90,12 +97,14 @@ dev = [
 
 [project.scripts]
 # Add script entry points here:
-simplexng = "searxng_local.simplexng:main"
+simplexng = "simplexng.simplexng:main"
 
 # ---- Sources ----
 
 [tool.uv.sources]
 searxng = { git = "https://github.com/searxng/searxng.git" }
+
+
 
 # ---- Build system ----
 
@@ -119,7 +128,7 @@ bump = "true"
 
 [tool.hatch.build.targets.wheel]
 # The source location for the package.
-packages = ["src/searxng_local"]
+packages = ["src/simplexng"]
 
 
 # ---- Settings ----

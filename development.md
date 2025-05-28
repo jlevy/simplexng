@@ -6,8 +6,8 @@ This project is set up to use [uv](https://docs.astral.sh/uv/) to manage Python 
 dependencies. First, be sure you
 [have uv installed](https://docs.astral.sh/uv/getting-started/installation/).
 
-Then [fork the jlevy/searxng-local
-repo](https://github.com/jlevy/searxng-local/fork) (having your own
+Then [fork the jlevy/simplexng
+repo](https://github.com/jlevy/simplexng/fork) (having your own
 fork will make it easier to contribute) and
 [clone it](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
 

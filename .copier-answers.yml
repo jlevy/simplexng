@@ -5,5 +5,5 @@ package_author_email: joshua@cal.berkeley.edu
 package_author_name: Joshua Levy
 package_description: Package of SearXNG for easy local usage
 package_github_org: jlevy
-package_module: searxng_local
-package_name: searxng-local
+package_module: simplexng
+package_name: simplexng

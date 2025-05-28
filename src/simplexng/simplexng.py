@@ -17,7 +17,7 @@ from typing import Any
 from clideps.utils.readable_argparse import ReadableColorFormatter
 from waitress import serve
 
-from searxng_local.settings import APP_NAME, get_or_init_settings
+from simplexng.settings import APP_NAME, get_or_init_settings
 
 
 def log_setup(level: int) -> logging.Logger:
@@ -102,7 +102,7 @@ def start_server(args: argparse.Namespace, log: logging.Logger) -> None:
     url = f"http://{args.host}:{args.port}"
     server_name = "Flask" if args.debug else "Waitress"
 
-    log.info(f"Starting SearXNG Local with {server_name} server...")
+    log.info(f"Starting SimpleXNG with {server_name} server...")
     log.info(f"URL: {url}")
     log.info("Press Ctrl+C to stop")
 

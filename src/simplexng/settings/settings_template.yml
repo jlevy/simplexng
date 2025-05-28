@@ -1,11 +1,11 @@
-# SearXNG Local Settings Template
+# SimpleXNG Settings Template
 # Based on utils/templates/etc/searxng/settings.yml
 
 use_default_settings: true
 
 general:
   debug: false
-  instance_name: "SearXNG Local"
+  instance_name: "SimpleXNG"
 
 search:
   safe_search: 0
