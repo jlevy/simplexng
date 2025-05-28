@@ -1,10 +1,38 @@
 # searxng-local
 
-👉\[\[\[**This is the initial readme for your
-[simple-modern-uv](https://github.com/jlevy/simple-modern-uv) template.** Fill it in and
-delete this message!
-Below are general setup instructions that you may remove or keep and adapt for your
-project.\]\]\]
+SimpleXNG is a simplified package of [SearXNG](https://github.com/searxng/searxng) to
+make it a single command to run for local use.
+
+The [official install options](https://docs.searxng.org/admin/installation.html) all
+seemed quite complex if all you want to do is run it locally.
+
+This is a tiny package to streamline running it locally, without Docker, on macOS,
+Linux, or Windows. It omits the dependencies like Apache, Nginx, and Docker and uses
+[uv](https://github.com/astral-sh/uv) to manage the Python dependencies.
+It disables features like rate limiting and Redis and runs with all default options.
+(You can adjust these later if desired.)
+
+## Running
+
+We suggest [installing uv](https://docs.astral.sh/uv/getting-started/installation/) if
+you haven't already.
+Then install SimpleXNG:
+
+```shell
+uv tool install simplexng
+```
+
+To run:
+
+```shell
+simplexng 
+```
+
+More options:
+
+```shell
+simplexng --help
+```
 
 * * *
 

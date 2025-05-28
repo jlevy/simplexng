@@ -1,0 +1,30 @@
+# SearXNG Local Settings Template
+# Based on utils/templates/etc/searxng/settings.yml
+
+use_default_settings: true
+
+general:
+  debug: false
+  instance_name: "SearXNG Local"
+
+search:
+  safe_search: 0
+  autocomplete: 'duckduckgo'
+  formats:
+    - html
+
+server:
+  # Will be overridden by CLI arguments
+  port: 8888
+  bind_address: "127.0.0.1"
+  secret_key: "local-searxng-key-change-for-production"
+  limiter: false
+  image_proxy: false
+  public_instance: false
+
+redis:
+  # Disable Redis for local use
+  url: false
+
+ui:
+  static_use_hash: false
