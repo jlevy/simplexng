@@ -9,6 +9,7 @@
 default: install lint test
 
 install:
+	uv venv && uv pip install -r build-requirements.txt  # searxng build boostrap
 	uv sync --all-extras --dev
 
 lint:

@@ -4,22 +4,32 @@ SimpleXNG is a simplified package of [SearXNG](https://github.com/searxng/searxn
 make it a single command to run for local use.
 
 The [official install options](https://docs.searxng.org/admin/installation.html) for
-SearXNG seem quite complex, which may be necessary if you are setting up a server others
-use, but not not necessary if all you want to do is run it locally.
+SearXNG are a bit complex and assume admin privileges to set up.
+This can be simplified a lot if you're just wanting to run it locally for your own use.
 
-This is a tiny package to streamline running it locally, without Docker, on macOS,
-Linux, or Windows.
+SimpleXNG is a tiny package to run SearXNG locally on macOS, Linux, or Windows:
 
-It [uv](https://github.com/astral-sh/uv) to manage the Python dependencies, omits
-Apache, Nginx, and Docker setup, and uses the minimal template that does not enable
-features like rate limiting or Redis.
-(You can adjust these later if desired.)
+- It uses [uv](https://github.com/astral-sh/uv) to manage the Python dependencies.
+
+- It omits Apache, Nginx, and Docker setup.
+
+- It by default uses the
+  [minimal template settings](https://github.com/searxng/searxng/blob/master/utils/templates/etc/searxng/settings.yml)
+  with Redis and rate limiting turned off.
+  (You can adjust the settings file if desired.)
+
+- It publishes a package to PyPI that you can use.
+
+I wrote this since a friend was asking me why it wasn't easier to set up for "localhost"
+use or embedded use.
+So I thought I'd see if it worked as a minimal, modern uv package.
 
 ## Running
 
-We suggest [installing uv](https://docs.astral.sh/uv/getting-started/installation/) if
-you haven't already.
-Then install SimpleXNG:
+[Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you haven't
+already.
+
+To install:
 
 ```shell
 uv tool install simplexng
@@ -37,8 +47,9 @@ More options:
 simplexng --help
 ```
 
-As shown in the logs, it sets up a minimal config file (on macOS and Linux it will be
-`~/.config/simplexng/settings.yml`), which you can edit if desired.
+On first run, it sets up a minimal config file (on macOS and Linux it will be
+`~/.config/simplexng/settings.yml`), which you can edit and will be used on subsequent
+runs.
 
 * * *
 
