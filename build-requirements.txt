@@ -1,9 +1,0 @@
-# SearXNG has build dependencies that prevent a straightforward uv sync.
-# The options here
-# https://docs.astral.sh/uv/concepts/projects/config/#build-isolation
-# didn't work easily so using uv pip install initial step to get them in place.
-editables>=0.5
-hatchling>=1.27.0
-setuptools>=80.9.0
-uv-dynamic-versioning>=0.8.2
-pyyaml>=6.0.2

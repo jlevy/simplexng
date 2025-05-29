@@ -1,21 +1,27 @@
-#!/usr/bin/env python3
 """
 SimpleXNG: A simple way to run SearXNG locally
 """
 
+import sys
+from pathlib import Path
+
+# Inject the searxng vendor directory into the path before other imports.
+_vendor_path = str(Path(__file__).parent / "_vendor")
+if _vendor_path not in sys.path:
+    sys.path.insert(0, _vendor_path)
+
+# Now we can import the rest normally
 import argparse
 import logging
 import os
 import signal
-import sys
 import webbrowser
 from importlib.metadata import version
-from pathlib import Path
 from threading import Timer
 from typing import Any
 
+import waitress
 from clideps.utils.readable_argparse import ReadableColorFormatter
-from waitress import serve
 
 from simplexng.settings import APP_NAME, get_or_init_settings
 
@@ -55,10 +61,19 @@ def log_setup(level: int) -> logging.Logger:
     return logging.getLogger(APP_NAME)
 
 
-def get_app_version() -> str:
+def get_full_app_version() -> str:
     try:
-        return "v" + version(APP_NAME)
+        simplexng_version = "v" + version(APP_NAME)
     except Exception:
+        simplexng_version = "(unknown version)"
+
+    return f"{APP_NAME} {simplexng_version} (SearXNG {get_searxng_version()})"
+
+
+def get_searxng_version() -> str:
+    try:
+        return (Path(__file__).parent / "searxng_version.txt").read_text().strip()[:7]
+    except FileNotFoundError:
         return "(unknown version)"
 
 
@@ -78,9 +93,10 @@ def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         formatter_class=ReadableColorFormatter,
         description=__doc__,
-        epilog=f"{APP_NAME} {get_app_version()}",
+        epilog=f"{get_full_app_version()}",
     )
 
+    parser.add_argument("--version", action="version", version=get_full_app_version())
     parser.add_argument(
         "-p", "--port", type=int, default=8888, help="Port to run on (default: 8888)"
     )
@@ -88,7 +104,9 @@ def create_parser() -> argparse.ArgumentParser:
         "-H", "--host", default="127.0.0.1", help="Host to bind to (default: 127.0.0.1)"
     )
     parser.add_argument("--open", action="store_true", help="Open browser automatically")
-    parser.add_argument("--debug", action="store_true", help="Enable debug mode (Flask dev server)")
+    parser.add_argument(
+        "--flask", action="store_true", help="Use flask server instead of waitress (for debugging)"
+    )
     parser.add_argument("--settings", help="Path to custom settings.yml file")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose logging")
 
@@ -100,7 +118,7 @@ def start_server(args: argparse.Namespace, log: logging.Logger) -> None:
     Start the appropriate server.
     """
     url = f"http://{args.host}:{args.port}"
-    server_name = "Flask" if args.debug else "Waitress"
+    server_name = "Flask" if args.flask else "Waitress"
 
     log.info(f"Starting SimpleXNG with {server_name} server...")
     log.info(f"URL: {url}")
@@ -110,15 +128,15 @@ def start_server(args: argparse.Namespace, log: logging.Logger) -> None:
         Timer(1.5, lambda: webbrowser.open(url)).start()
         log.info("Opening browser...")
 
-    if args.debug:
-        from searx.webapp import app
+    if args.flask:
+        from searx.webapp import app  # pyright: ignore
 
-        app.run(host=args.host, port=args.port, debug=True)
+        app.run(host=args.host, port=args.port, debug=True)  # pyright: ignore[reportUnknownMemberType]
     else:
-        from searx.webapp import application
+        from searx.webapp import application  # pyright: ignore
 
-        serve(
-            application,
+        waitress.serve(
+            application,  # pyright: ignore[reportUnknownArgumentType]
             host=args.host,
             port=args.port,
             threads=4,
@@ -135,7 +153,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # Set up logging and signal handling
-    level = logging.DEBUG if args.verbose or args.debug else logging.INFO
+    level = logging.DEBUG if args.verbose else logging.INFO
     log = log_setup(level)
     signal.signal(signal.SIGINT, signal_handler)
 

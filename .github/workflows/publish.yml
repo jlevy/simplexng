@@ -28,8 +28,8 @@ jobs:
       - name: Set up Python (using uv)
         run: uv python install
 
-      - name: Prepare searxng build dependencies
-        run: uv venv && uv pip install -r build-requirements.txt 
+      - name: Vendor SearXNG from the current vendored version
+        run: ./scripts/clone_searxng.sh CURRENT
 
       - name: Install all dependencies
         run: uv sync --all-extras --dev

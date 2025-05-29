@@ -4,12 +4,11 @@
 
 .DEFAULT_GOAL := default
 
-.PHONY: default install lint test upgrade build clean
+.PHONY: default install lint test upgrade vendor build clean
 
 default: install lint test
 
 install:
-	uv venv && uv pip install -r build-requirements.txt  # searxng build boostrap
 	uv sync --all-extras --dev
 
 lint:
@@ -21,7 +20,10 @@ test:
 upgrade:
 	uv sync --upgrade --all-extras --dev
 
-build:
+vendor:
+	./scripts/clone_searxng.sh HEAD
+
+build: vendor
 	uv build
 
 clean:

@@ -1024,33 +1024,6 @@ wheels = [
 ]
 
 [[package]]
-name = "searxng"
-version = "2025.5.28+2288f07d6"
-source = { git = "https://github.com/searxng/searxng.git#2288f07d621d67d6b39f0d0073cdcc951ec22726" }
-dependencies = [
-    { name = "babel" },
-    { name = "brotli" },
-    { name = "certifi" },
-    { name = "fasttext-predict" },
-    { name = "flask" },
-    { name = "flask-babel" },
-    { name = "httpx", extra = ["http2"] },
-    { name = "httpx-socks", extra = ["asyncio"] },
-    { name = "isodate" },
-    { name = "jinja2" },
-    { name = "lxml" },
-    { name = "markdown-it-py" },
-    { name = "msgspec" },
-    { name = "pygments" },
-    { name = "python-dateutil" },
-    { name = "pyyaml" },
-    { name = "redis" },
-    { name = "setproctitle" },
-    { name = "typer-slim" },
-    { name = "uvloop" },
-]
-
-[[package]]
 name = "setproctitle"
 version = "1.3.6"
 source = { registry = "https://pypi.org/simple" }
@@ -1110,10 +1083,29 @@ wheels = [
 name = "simplexng"
 source = { editable = "." }
 dependencies = [
+    { name = "babel" },
+    { name = "brotli" },
+    { name = "certifi" },
     { name = "clideps" },
+    { name = "fasttext-predict" },
+    { name = "flask" },
+    { name = "flask-babel" },
+    { name = "httpx", extra = ["http2"] },
+    { name = "httpx-socks", extra = ["asyncio"] },
+    { name = "isodate" },
+    { name = "jinja2" },
+    { name = "lxml" },
+    { name = "markdown-it-py" },
+    { name = "msgspec" },
     { name = "platformdirs" },
+    { name = "pygments" },
+    { name = "python-dateutil" },
+    { name = "pyyaml" },
+    { name = "redis" },
     { name = "rich" },
-    { name = "searxng" },
+    { name = "setproctitle" },
+    { name = "typer-slim" },
+    { name = "uvloop" },
     { name = "waitress" },
 ]
 
@@ -1130,10 +1122,29 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "babel", specifier = "==2.17.0" },
+    { name = "brotli", specifier = "==1.1.0" },
+    { name = "certifi", specifier = "==2025.4.26" },
     { name = "clideps", specifier = ">=0.1.6" },
+    { name = "fasttext-predict", specifier = "==0.9.2.4" },
+    { name = "flask", specifier = "==3.1.1" },
+    { name = "flask-babel", specifier = "==4.0.0" },
+    { name = "httpx", extras = ["http2"], specifier = "==0.28.1" },
+    { name = "httpx-socks", extras = ["asyncio"], specifier = "==0.10.0" },
+    { name = "isodate", specifier = "==0.7.2" },
+    { name = "jinja2", specifier = "==3.1.6" },
+    { name = "lxml", specifier = "==5.4.0" },
+    { name = "markdown-it-py", specifier = "==3.0.0" },
+    { name = "msgspec", specifier = "==0.19.0" },
     { name = "platformdirs", specifier = ">=4.3.8" },
+    { name = "pygments", specifier = "==2.19.1" },
+    { name = "python-dateutil", specifier = "==2.9.0.post0" },
+    { name = "pyyaml", specifier = "==6.0.2" },
+    { name = "redis", specifier = "==5.2.1" },
     { name = "rich", specifier = ">=14.0.0" },
-    { name = "searxng", git = "https://github.com/searxng/searxng.git" },
+    { name = "setproctitle", specifier = "==1.3.6" },
+    { name = "typer-slim", specifier = "==0.15.4" },
+    { name = "uvloop", specifier = "==0.21.0" },
     { name = "waitress", specifier = ">=3.0.2" },
 ]
 

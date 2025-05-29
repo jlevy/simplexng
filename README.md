@@ -18,7 +18,8 @@ SimpleXNG is a tiny package to run SearXNG locally on macOS, Linux, or Windows:
   with Redis and rate limiting turned off.
   (You can adjust the settings file if desired.)
 
-- It publishes a package to PyPI that you can use.
+- It vendors a recent copy of SearXNG so it is all available from PyPI for quick
+  installation.
 
 I wrote this since a friend was asking me why it wasn't easier to set up for "localhost"
 use or embedded use.
@@ -47,9 +48,18 @@ More options:
 simplexng --help
 ```
 
-On first run, it sets up a minimal config file (on macOS and Linux it will be
-`~/.config/simplexng/settings.yml`), which you can edit and will be used on subsequent
-runs.
+Notes:
+
+- On first run, it sets up a minimal config file (on macOS and Linux it will be
+  `~/.config/simplexng/settings.yml`), which you can edit and will be used on subsequent
+  runs.
+
+- You can see the version of SearXNG being used with `simplexng --version`. If you want
+  a newer or different build, you can clone this repo and run:
+  ```shell
+  ./scripts/clone_searxng.sh HEAD   # Or pick a revision
+  uv run simplexng
+  ```
 
 * * *
 
