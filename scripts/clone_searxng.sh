@@ -40,6 +40,10 @@ COMMIT_HASH="$(git -C "$tmpdir" rev-parse HEAD)"
 
 echo "Resolved to commit: $COMMIT_HASH"
 
+# Generate version_frozen.py to avoid git-related errors in vendored code
+echo "Generating version_frozen.py..."
+(cd "$tmpdir" && uv run python -m searx.version freeze)
+
 set -x
 
 # Remove old vendor copy

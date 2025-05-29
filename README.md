@@ -3,13 +3,44 @@
 SimpleXNG is a simplified package of [SearXNG](https://github.com/searxng/searxng) to
 make it a single command to run for local use.
 
+## Why?
+
 The [official install options](https://docs.searxng.org/admin/installation.html) for
 SearXNG are a bit complex and assume admin privileges to set up.
 This can be simplified a lot if you're just wanting to run it locally for your own use.
 
-SimpleXNG is a tiny package to run SearXNG locally on macOS, Linux, or Windows:
+SimpleXNG is a tiny package to run SearXNG locally on macOS, Linux, or Windows.
 
-- It uses [uv](https://github.com/astral-sh/uv) to manage the Python dependencies.
+I wrote this since a friend was asking me why it wasn't easier to set up for "localhost"
+use or embedded use.
+I thought I'd see if it worked as a minimal, modern uv package.
+
+## Running
+
+1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you haven't
+   already.
+
+2. Install:
+
+   ```shell
+   uv tool install --upgrade simplexng
+   ```
+3. Run it:
+
+   ```shell
+   simplexng --open
+   ```
+
+See more options:
+
+```shell
+simplexng --help
+```
+
+## Notes
+
+- SimpleXNG uses [uv](https://github.com/astral-sh/uv) to manage the Python
+  dependencies.
 
 - It omits Apache, Nginx, and Docker setup.
 
@@ -18,37 +49,8 @@ SimpleXNG is a tiny package to run SearXNG locally on macOS, Linux, or Windows:
   with Redis and rate limiting turned off.
   (You can adjust the settings file if desired.)
 
-- It vendors a recent copy of SearXNG so it is all available from PyPI for quick
-  installation.
-
-I wrote this since a friend was asking me why it wasn't easier to set up for "localhost"
-use or embedded use.
-So I thought I'd see if it worked as a minimal, modern uv package.
-
-## Running
-
-[Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you haven't
-already.
-
-To install:
-
-```shell
-uv tool install simplexng
-```
-
-To run:
-
-```shell
-simplexng --open
-```
-
-More options:
-
-```shell
-simplexng --help
-```
-
-Notes:
+- Since SearXNG is distributed in Docker images only, we vendor a recent copy of SearXNG
+  so it is all available in a single package from PyPI for quick installation.
 
 - On first run, it sets up a minimal config file (on macOS and Linux it will be
   `~/.config/simplexng/settings.yml`), which you can edit and will be used on subsequent
@@ -60,6 +62,8 @@ Notes:
   ./scripts/clone_searxng.sh HEAD   # Or pick a revision
   uv run simplexng
   ```
+
+- Note this code and SearXNG are AGPL-3.0 licensed.
 
 * * *
 

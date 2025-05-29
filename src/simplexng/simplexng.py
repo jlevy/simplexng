@@ -13,7 +13,6 @@ if _vendor_path not in sys.path:
 # Now we can import the rest normally
 import argparse
 import logging
-import os
 import signal
 import webbrowser
 from importlib.metadata import version
@@ -23,7 +22,7 @@ from typing import Any
 import waitress
 from clideps.utils.readable_argparse import ReadableColorFormatter
 
-from simplexng.settings import APP_NAME, get_or_init_settings
+from simplexng.settings import APP_NAME, get_settings_path, init_settings
 
 
 def log_setup(level: int) -> logging.Logger:
@@ -71,6 +70,15 @@ def get_full_app_version() -> str:
 
 
 def get_searxng_version() -> str:
+    # Careful, can't import anything until searxng is initialized or it will abort
+    if get_settings_path():
+        try:
+            from searx.version import VERSION_STRING  # pyright: ignore
+
+            return VERSION_STRING  # pyright: ignore
+        except ImportError:
+            pass
+    # Fall back to reading from file if version module is not (yet) available
     try:
         return (Path(__file__).parent / "searxng_version.txt").read_text().strip()[:7]
     except FileNotFoundError:
@@ -91,9 +99,7 @@ def create_parser() -> argparse.ArgumentParser:
     Create and configure argument parser.
     """
     parser = argparse.ArgumentParser(
-        formatter_class=ReadableColorFormatter,
-        description=__doc__,
-        epilog=f"{get_full_app_version()}",
+        formatter_class=ReadableColorFormatter, description=__doc__, epilog=get_full_app_version()
     )
 
     parser.add_argument("--version", action="version", version=get_full_app_version())
@@ -125,7 +131,7 @@ def start_server(args: argparse.Namespace, log: logging.Logger) -> None:
     log.info("Press Ctrl+C to stop")
 
     if args.open:
-        Timer(1.5, lambda: webbrowser.open(url)).start()
+        Timer(2, lambda: webbrowser.open(url)).start()
         log.info("Opening browser...")
 
     if args.flask:
@@ -157,22 +163,13 @@ def main() -> None:
     log = log_setup(level)
     signal.signal(signal.SIGINT, signal_handler)
 
-    # Prepare settings
-    if args.settings:
-        settings_path = Path(args.settings)
-        if not settings_path.exists():
-            raise FileNotFoundError(f"Settings file not found: {settings_path}")
-        log.warning(f"Using custom settings: {args.settings}")
-    else:
-        settings_path = get_or_init_settings(args.port, args.host)
-
-    # Set configs for SearXNG to use this path (and its parent as the config path)
-    os.environ["SEARXNG_SETTINGS_PATH"] = str(settings_path)
-
     try:
+        init_settings(args.port, args.host, Path(args.settings) if args.settings else None)
+        log.warning("Initialized: %s", get_full_app_version())
+
         start_server(args, log)
     except Exception as e:
-        log.error(f"Unexpected error: {e}")
+        log.error(f"Error: {e.__class__.__name__}: {e}")
         sys.exit(1)
 
 
