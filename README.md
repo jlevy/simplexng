@@ -7,29 +7,33 @@ make it a single command to run for local use.
 
 The [official install options](https://docs.searxng.org/admin/installation.html) for
 SearXNG are a bit complex and assume admin privileges to set up.
-This can be simplified a lot if you're just wanting to run it locally for your own use.
+This can be simplified a lot if you’re just wanting to run it locally for your own use.
 
 SimpleXNG is a tiny package to run SearXNG locally on macOS, Linux, or Windows.
 
-I wrote this since a friend was asking me why it wasn't easier to set up for "localhost"
+I wrote this since a friend was asking me why it wasn’t easier to set up for “localhost”
 use or embedded use.
-I thought I'd see if it worked as a minimal, modern uv package.
+I thought I’d see if it worked as a minimal, modern uv package.
 
 ## Running
 
-1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you haven't
+1. [Install uv](https://docs.astral.sh/uv/getting-started/installation/) if you haven’t
    already.
 
-2. Install:
+2. Install and run:
 
    ```shell
    uv tool install --upgrade simplexng
-   ```
-3. Run it:
-
-   ```shell
    simplexng --open
    ```
+
+   Or if you’re in a hurry, in one line:
+
+   ```shell
+   uvx --upgrade simplexng --open
+   ```
+
+   This will install the latest version of SimpleXNG and open it in your browser.
 
 See more options:
 
@@ -63,7 +67,14 @@ simplexng --help
   uv run simplexng
   ```
 
-- Note this code and SearXNG are AGPL-3.0 licensed.
+## Thoughts?
+
+If this is useful or of interest or have feedback, file an issue or drop a comment [on
+my post about SimpleXNG](https://github.com/searxng/searxng/discussions/5082).
+
+## License
+
+This code and SearXNG are AGPL-3.0 licensed.
 
 * * *
 
